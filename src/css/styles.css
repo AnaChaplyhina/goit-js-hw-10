@@ -1,18 +1,48 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-/* Common styles */
-@import url('./reset.css');
-@import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+h1 {
+  margin-bottom: 20px;
+}
+
+.nav-btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4e75ff;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  background-color: #3e5dc6;
+}
+
+/* 1-timer.css */
+.timer {
+  display: flex;
+  gap: 20px;
+}
+
+.field {
+  text-align: center;
+}
+
+.value {
+  font-size: 2rem;
+}
+
+.label {
+  font-size: 1rem;
+}
+
+button[disabled] {
+  opacity: 0.5;
+}
