@@ -79,3 +79,20 @@ function updateTimerUI(days, hours, minutes, seconds) {
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
+
+function updateTimer(targetTime) {
+  const currentTime = new Date().getTime();
+  const deltaTime = targetTime - currentTime;
+
+  if (deltaTime > 0) {
+    const days = Math.floor(deltaTime / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((deltaTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((deltaTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((deltaTime % (1000 * 60)) / 1000);
+
+    document.querySelector("[data-days]").textContent = String(days).padStart(2, '0');
+    document.querySelector("[data-hours]").textContent = String(hours).padStart(2, '0');
+    document.querySelector("[data-minutes]").textContent = String(minutes).padStart(2, '0');
+    document.querySelector("[data-seconds]").textContent = String(seconds).padStart(2, '0');
+  }
+}
