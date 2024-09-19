@@ -25,24 +25,25 @@ h1 {
   background-color: #3e5dc6;
 }
 
-/* 1-timer.css */
 .timer {
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  gap: 15px;
+  /* Відступ між елементами */
 }
 
 .field {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .value {
-  font-size: 2rem;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .label {
-  font-size: 1rem;
-}
-
-button[disabled] {
-  opacity: 0.5;
+  font-size: 14px;
+  color: #333;
 }

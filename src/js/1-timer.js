@@ -1,8 +1,10 @@
-const startButton = document.querySelector('button[data-start]');
-const daysField = document.querySelector('[data-days]');
-const hoursField = document.querySelector('[data-hours]');
-const minutesField = document.querySelector('[data-minutes]');
-const secondsField = document.querySelector('[data-seconds]');
+const startBtn = document.querySelector('[data-start]');
+const daysValue = document.querySelector('[data-days]');
+const hoursValue = document.querySelector('[data-hours]');
+const minutesValue = document.querySelector('[data-minutes]');
+const secondsValue = document.querySelector('[data-seconds]');
+const datetimePicker = document.getElementById('datetime-picker');
+
 let userSelectedDate = null;
 let countdownInterval = null;
 
@@ -15,45 +17,42 @@ const options = {
     const selectedDate = selectedDates[0];
     if (selectedDate <= new Date()) {
       iziToast.warning({
-        title: 'Warning',
+        title: 'Error',
         message: 'Please choose a date in the future',
       });
-      startButton.disabled = true;
+      startBtn.disabled = true;
     } else {
       userSelectedDate = selectedDate;
-      startButton.disabled = false;
+      startBtn.disabled = false;
     }
   },
 };
 
 flatpickr('#datetime-picker', options);
 
-startButton.addEventListener('click', () => {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-  }
-  
-  countdownInterval = setInterval(() => {
-    const now = new Date();
-    const timeDifference = userSelectedDate - now;
+startBtn.addEventListener('click', () => {
+  startCountdown();
+  startBtn.disabled = true;
+  datetimePicker.disabled = true;
+});
 
-    if (timeDifference <= 0) {
+function startCountdown() {
+  countdownInterval = setInterval(() => {
+    const timeLeft = userSelectedDate - new Date();
+    if (timeLeft <= 0) {
       clearInterval(countdownInterval);
-      updateTimerUI(0, 0, 0, 0);
+      updateTimerDisplay(0, 0, 0, 0);
+      datetimePicker.disabled = false;
       iziToast.success({
-        title: 'Finished',
-        message: 'Countdown has reached zero',
+        title: 'Done',
+        message: 'Countdown finished!',
       });
       return;
     }
-
-    const { days, hours, minutes, seconds } = convertMs(timeDifference);
-    updateTimerUI(days, hours, minutes, seconds);
+    const { days, hours, minutes, seconds } = convertMs(timeLeft);
+    updateTimerDisplay(days, hours, minutes, seconds);
   }, 1000);
-
-  startButton.disabled = true;
-  document.querySelector('#datetime-picker').disabled = true;
-});
+}
 
 function convertMs(ms) {
   const second = 1000;
@@ -69,30 +68,13 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function updateTimerUI(days, hours, minutes, seconds) {
-  daysField.textContent = addLeadingZero(days);
-  hoursField.textContent = addLeadingZero(hours);
-  minutesField.textContent = addLeadingZero(minutes);
-  secondsField.textContent = addLeadingZero(seconds);
+function updateTimerDisplay(days, hours, minutes, seconds) {
+  daysValue.textContent = addLeadingZero(days);
+  hoursValue.textContent = addLeadingZero(hours);
+  minutesValue.textContent = addLeadingZero(minutes);
+  secondsValue.textContent = addLeadingZero(seconds);
 }
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
-}
-
-function updateTimer(targetTime) {
-  const currentTime = new Date().getTime();
-  const deltaTime = targetTime - currentTime;
-
-  if (deltaTime > 0) {
-    const days = Math.floor(deltaTime / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((deltaTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((deltaTime % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((deltaTime % (1000 * 60)) / 1000);
-
-    document.querySelector("[data-days]").textContent = String(days).padStart(2, '0');
-    document.querySelector("[data-hours]").textContent = String(hours).padStart(2, '0');
-    document.querySelector("[data-minutes]").textContent = String(minutes).padStart(2, '0');
-    document.querySelector("[data-seconds]").textContent = String(seconds).padStart(2, '0');
-  }
 }
