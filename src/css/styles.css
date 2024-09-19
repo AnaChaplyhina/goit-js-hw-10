@@ -25,11 +25,40 @@ h1 {
   background-color: #3e5dc6;
 }
 
+.nav-btn,
+.back-btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #4e75ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn:hover,
+.back-btn:hover {
+  background-color: #3d5ec1;
+}
+
+.back-btn {
+  background-color: #ff4e4e;
+}
+
+.back-btn:hover {
+  background-color: #c13d3d;
+}
+
+/*task1 */
+
 .timer {
   display: flex;
   justify-content: center;
   gap: 15px;
-  /* Відступ між елементами */
 }
 
 .field {
@@ -48,6 +77,8 @@ h1 {
   color: #333;
 }
 
+
+/*task 2*/
 .success {
   color: green;
   font-weight: bold;
